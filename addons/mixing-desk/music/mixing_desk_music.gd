@@ -55,13 +55,13 @@ func _ready():
 	root.name = "root"
 	add_child(root)
 	shuff.connect("timeout", shuffle_songs)
-	for song in songs:
-		for i in song.get_children():
-			if i.cont == "core":
-				for o in i.get_children():
-					var tween = Tween.new()
-					tween.name = 'Tween'
-					o.add_child(tween)
+#	for song in songs:
+#		for i in song.get_children():
+#			if i.cont == "core":
+#				for o in i.get_children():
+#					var tween = o.create_tween()
+#					o.add_child(tween)
+#					tween.name = 'Tween'
 	if autoplay:
 		if !playing:
 			quickplay(str(autoplay_song))
@@ -128,11 +128,11 @@ func start_alone(song, layer):
 func _iplay(track):
 	var trk = track.duplicate()
 	get_node("root").add_child(trk)
-	var twe = Tween.new()
+	var twe = create_tween()
 	twe.name = "Tween"
 	trk.add_child(twe)
 	trk.play()
-	trk.connect("finished", self, "_track_finished", [trk])
+	trk.connect("finished", _track_finished(trk))
 	return trk
 
 #kills overlays when finished
@@ -142,9 +142,10 @@ func _track_finished(trk):
 #fade out overlays
 func _stop_overlays():
 	for i in get_node("root").get_children():
-		i.get_node("Tween").interpolate_property(i, "volume_db", i.volume_db, -60, transition_beats, Tween.TRANS_LINEAR, Tween.EASE_IN)
-		i.get_node("Tween").start()
-		i.get_node("Tween").connect("tween_completed", _overlay_faded(i))
+		var tween = i.create_tween()
+		tween.interpolate_property(i, "volume_db", i.volume_db, -60, transition_beats, Tween.TRANS_LINEAR, Tween.EASE_IN)
+		tween.start()
+		tween.connect("tween_completed", _overlay_faded(i))
 
 #delete overlay on fade
 func _overlay_faded(overlay):
@@ -157,9 +158,11 @@ func quickplay(song):
 
 #check if ref is string or int
 func _songname_to_int(ref):
-	if typeof(ref) == TYPE_STRING:		return get_node(ref).get_index()
-	else:
-		return ref
+	if typeof(ref) == TYPE_STRING:
+		var n = get_node(ref)
+		if n:
+			return n.get_index()
+	return ref
 
 func _trackname_to_int(song, ref):
 	if typeof(ref) == TYPE_STRING:
@@ -187,7 +190,7 @@ func play(song):
 					first = false
 	if !playing:
 		last_beat = 1
-		emit_signal("bar", bar)
+		emit_signal("Bar", bar)
 		_beat()
 		playing = true
 	_play_overlays(song)
@@ -312,8 +315,8 @@ func fade_in(song, layer):
 	layer = _trackname_to_int(song, layer)
 	songs[song]._get_core().get_child(layer).volume_db = default_vol
 	var target = playing_tracks[layer]
-	var tween = target.get_node("Tween")
 	var in_from = target.get_volume_db()
+	var tween = target.create_tween()
 	tween.interpolate_property(target, 'volume_db', in_from, default_vol, transition_beats, Tween.TRANS_QUAD, Tween.EASE_OUT)
 	tween.start()
 	var pos = songs[song].muted_tracks.find(layer)
@@ -326,8 +329,8 @@ func fade_out(song, layer):
 	layer = _trackname_to_int(song, layer)
 	songs[song]._get_core().get_child(layer).volume_db = -65.0
 	var target = playing_tracks[layer]
-	var tween = target.get_node("Tween")
 	var in_from = target.get_volume_db()
+	var tween = target.create_tween()
 	tween.interpolate_property(target, 'volume_db', in_from, -65.0, transition_beats, Tween.TRANS_SINE, Tween.EASE_OUT)
 	tween.start()
 
@@ -465,7 +468,7 @@ func _beat():
 		b2bar = 1
 		bar += 1
 		_bar()
-		emit_signal("bar", bar)
+		emit_signal("Bar", bar)
 	else:
 		b2bar += 1
 	if rollover != null:
@@ -477,7 +480,7 @@ func _beat():
 				rollover.get_child(0).play()
 	if beat == (bars*beats_in_bar + 1):
 		_core_finished()
-	emit_signal("beat", (beat - 1) % int(bars * beats_in_bar) + 1)
+	emit_signal("Beat", (beat - 1) % int(bars * beats_in_bar) + 1)
 
 func get_current_song():
 	return get_child(current_song_num)
