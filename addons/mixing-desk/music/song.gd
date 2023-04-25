@@ -10,24 +10,26 @@ var concats : Array
 var playing = false
 
 #external properties
-export(int) var tempo
-export(int) var bars
-export(int) var beats_in_bar
-export(float) var transition_beats
-export(bool) var ignore = false
-export(bool) var auto_transition
-export(NodePath) var auto_signal_node
-export(String) var auto_signal
-export(String, "Beat", "Bar") var transition_type
-export(String) var bus = "Music"
+@export var ignore := false
+
+@export var tempo : int
+@export var bars : int
+@export var beats_in_bar : int
+@export var transition_beats : float
+@export var auto_transition : bool
+@export_node_path var auto_signal_node
+@export var auto_signal : String
+@export_enum("Beat", "Bar") var transition_type : String
+@export var bus := "Music"
+
 
 func _ready():
 	if auto_transition:
 		var sig_node = get_node(auto_signal_node)
-		sig_node.connect(auto_signal, self, "_transition", [transition_type])
+		sig_node.connect(auto_signal, _transition(transition_type))
 	var busnum = AudioServer.get_bus_index(bus)
 	if busnum == -1:
-		var new_bus = AudioServer.add_bus(AudioServer.bus_count)
+		AudioServer.add_bus(AudioServer.bus_count)
 		AudioServer.set_bus_name(AudioServer.bus_count - 1, bus)
 		if bus != "Music":
 			AudioServer.set_bus_send(AudioServer.get_bus_index(bus),"Music")

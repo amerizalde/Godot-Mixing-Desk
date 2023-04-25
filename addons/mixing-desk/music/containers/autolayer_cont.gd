@@ -1,17 +1,17 @@
 extends Node
 
 enum play_mode {additive, single, pad}
-export(play_mode) var play_style
-export(int) var layer_min
-export(int) var layer_max
-export(bool) var automate = false
-export(NodePath) var target_node
-export(String) var target_property
-export(float) var min_range = 0.0
-export(float) var max_range = 1.0
-export(int) var pad = 0
-export(bool) var invert
-export(float) var track_speed
+@export var play_style : play_mode
+@export var layer_min : int
+@export var layer_max : int
+@export var automate := false
+@export_node_path var target_node
+@export var target_property : String
+@export var min_range := 0.0
+@export var max_range := 1.0
+@export var pad := 0
+@export var invert : bool
+@export var track_speed : float
 
 var target
 var num = 0.0
@@ -19,14 +19,14 @@ var t_layer
 var cont = "autolayer"
 
 func _ready():
-	get_node("../..").connect("beat", self, "_update")
+	get_node("../..").connect("beat", _update)
 	target = get_node(target_node)
 	init_layers()
-	
+
 func _update(beat):
 	_set_layers_values()
 	_fade_layers()
-	
+
 func init_layers():
 	_set_layers_values()
 	for i in range(get_child_count()):
@@ -36,7 +36,7 @@ func init_layers():
 				child.volume_db = -65
 			else:
 				child.volume_db = 0
-	
+
 func _set_layers_values():
 	t_layer = layer_max
 	if automate:
@@ -69,7 +69,7 @@ func _fade_layers():
 				_fade_to(child,-65)
 			else:
 				_fade_to(child,0)
-				
+
 func is_equal(a : float,b : float):
 	return int(a) == int(b)
 

@@ -4,11 +4,11 @@ var dvols = []
 var dpitches = []
 var soundlist = []
 var root
-export(NodePath) var spawn_node
-export var autoplay : bool
-export var volume_range : float
-export var pitch_range : float
-export var sound_number : int
+@export_node_path var spawn_node
+@export var autoplay : bool
+@export var volume_range : float
+@export var pitch_range : float
+@export var sound_number : int
 
 func _ready():
 	for i in get_children():
@@ -37,7 +37,7 @@ func _iplay(sound):
 	if spawn_node:
 		snd.position = global_position
 	snd.play()
-	snd.set_script(preload("res://addons/mixing-desk/sound/2d/spawn_sound.gd"))
+	snd.set_script(preload("res://addons/Godot-Mixing-Desk/addons/mixing-desk/sound/2d/spawn_sound.gd"))
 	snd.setup()
 
 func play(num=0, ran=true):
@@ -50,18 +50,18 @@ func play(num=0, ran=true):
 	else:
 		var ransnd = _get_ransnd()
 		_iplay(ransnd)
-		
+
 func _get_ransnd(ran=true):
 	var chance = randi() % soundlist.size()
 	var ransnd = soundlist[chance]
 	if ran:
 		_randomise_pitch_and_vol(ransnd)
 	return ransnd
-		
+
 func _randomise_pitch_and_vol(sound):
 	var dvol = sound.get_parent().dvols[sound.get_index()]
 	var dpitch = sound.get_parent().dpitches[sound.get_index()]
-	var newvol = (dvol + rand_range(-volume_range,volume_range))
-	var newpitch = (dpitch + rand_range(-pitch_range,pitch_range))
+	var newvol = (dvol + randf_range(-volume_range,volume_range))
+	var newpitch = (dpitch + randf_range(-pitch_range,pitch_range))
 	sound.volume_db = newvol
 	sound.pitch_scale = newpitch

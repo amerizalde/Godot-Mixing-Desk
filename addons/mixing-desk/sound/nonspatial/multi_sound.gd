@@ -1,7 +1,7 @@
 extends Node
 
-export var autoplay : bool
-export(NodePath) var spawn_node
+@export var autoplay : bool
+@export_node_path var spawn_node
 
 func _ready():
 	for i in get_children():
