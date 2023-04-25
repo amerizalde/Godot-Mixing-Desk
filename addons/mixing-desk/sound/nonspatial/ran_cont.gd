@@ -1,4 +1,5 @@
-extends Node
+extends Node2D
+class_name RanCont
 
 var dvols = []
 var dpitches = []

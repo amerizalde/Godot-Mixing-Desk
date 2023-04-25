@@ -1,4 +1,5 @@
-extends Node
+extends Node2D
+class_name MultiSound
 
 @export var autoplay : bool
 @export_node_path var spawn_node

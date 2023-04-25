@@ -1,4 +1,5 @@
-extends Node
+extends Node2D
+class_name PolySound
 
 var dvols = []
 var dpitches = []

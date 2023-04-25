@@ -76,7 +76,6 @@ func is_equal(a : float,b : float):
 func _fade_to(target, vol):
 	var is_match
 	var cvol = target.volume_db
-	var sum = vol - cvol
 	is_match = is_equal(vol,cvol)
 	if !is_match:
 		if cvol > vol:

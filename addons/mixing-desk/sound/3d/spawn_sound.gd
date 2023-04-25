@@ -1,4 +1,4 @@
-extends AudioStreamPlayer3D
+extends SpawnSound
 
 func setup():
 	connect("finished", finished)

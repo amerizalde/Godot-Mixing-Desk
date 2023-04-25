@@ -1,32 +1,4 @@
-extends Node2D
-
-var dvols = []
-var dpitches = []
-var root
-@export_node_path var spawn_node
-@export var autoplay : bool
-@export var volume_range : float
-@export var pitch_range : float
-
-func _ready():
-	for i in get_children():
-		dvols.append(i.volume_db)
-		dpitches.append(i.pitch_scale)
-	if spawn_node:
-		if typeof(spawn_node) == TYPE_NODE_PATH:
-			root = get_node(spawn_node)
-		elif typeof(spawn_node) == TYPE_OBJECT:
-			root = spawn_node
-	else:
-		root = Node2D.new()
-		add_child(root)
-		root.name = "root"
-	if autoplay:
-		play()
-
-func stop():
-	for i in root.get_children():
-		i.queue_free()
+extends PolySound
 
 func _iplay(sound):
 	var snd = sound.duplicate()
