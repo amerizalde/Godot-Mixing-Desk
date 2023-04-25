@@ -1,4 +1,7 @@
-# Godot Mixing Desk 2.13.3
+# Godot Mixing Desk 2.13.4
+
+### Updated to Godot 4.0 API
+>Assumes you are cloning this repo into your addons directory, due to hardcoded string references in preloads.
 
 The Mixing Desk is a complete audio solution for the Godot Engine.
 Godot already ships with some awesome audio capabilities - namely the bus system which is so intuitive for audio.
@@ -42,7 +45,7 @@ Each song can also be routed to its own bus, if desired. By default, it is set t
 ![Example of an overlay setup](https://i.imgur.com/Uccm4IV.png)
 
 Overlays are set up in much the same way as core tracks. Create a RandomContainer, and a random track from that folder will be played on each repeat, with a slight chance of no track playing depending on the value of the RandomContainer's `random_chance` - if the random number generated (between 0 and 1) each time song plays is lower than the value of `random_chance`, the track plays.
-	
+
 SeqContainers play the audio nodes in order, from top to bottom, and over again. Overlays must be equal length or shorter than the corresponding core tracks.
 
 Use a ConcatContainer for a group of short tracks, particularly percussion, that you wish to play in random order over the top of the song. These tracks will be chosen randomly and each will immediately follow the previous. Good for randomising drums by the measure, or whichever length samples you choose to throw in.
@@ -78,7 +81,7 @@ Then, call `play(song)` - track in both cases being either the name of the song 
 
 ### Adapting the music
 
-Based on implementations of interactive music in [FMOD](https://www.fmod.com/) and [Wwise](https://www.audiokinetic.com/products/wwise/),  the MDM neatly covers the two major branches of adaptive music outlined by [Michael Sweet](https://www.designingmusicnow.com/2016/06/13/advantages-disadvantages-common-interactive-music-techniques-used-video-games/). 
+Based on implementations of interactive music in [FMOD](https://www.fmod.com/) and [Wwise](https://www.audiokinetic.com/products/wwise/),  the MDM neatly covers the two major branches of adaptive music outlined by [Michael Sweet](https://www.designingmusicnow.com/2016/06/13/advantages-disadvantages-common-interactive-music-techniques-used-video-games/).
 
 ### **Vertical Remixing/Layering**
 MDM can fade individual tracks in and out using the `fade_in(track)` or `fade_out(track)` functions. It can also fade multiple tracks in/out at once with the `mute_below_layer(track)` and `mute_above_layer(track)` functions. Fading and muting both have toggles, too - `toggle_fade(song, track)` and `toggle_mute(song, track)`. To begin a track with a base layer only, the `start_alone(track, layer)` function can be used.
@@ -144,7 +147,7 @@ MDS is slightly different to MDM - there are still container nodes, but no paren
 - `MultiSoundContainer` can contain any of the other containers, or AudioStreamPlayers, and will play all nodes nested within.
 
 And, similar to the AudioStreamPlayers found natively in Godot, there is a Node (no position), 2D, and 3D type for each container.
-To play a container, simply call `play()`! 
+To play a container, simply call `play()`!
 
 ![A PolySoundContainer](https://i.imgur.com/xkDToeA.png)
 
@@ -168,7 +171,7 @@ If you want the sounds to begin scattering as soon as the scene is loaded, check
 ![Scatter sound properties](https://i.imgur.com/WcLjKvA.png)
 
 If you'd prefer to begin scattering at a different time, simply call play(), like any other sound container!
-	
+
 Either method will generate 'voices' number of timers, the timeouts of each being determined randomly between the floats 'min_time' and 'max_time'.
 At each timer's timeout, it will randomly play a nested sound and begin again, its timeout once more randomised.
 This will continue indefinitely, randomised timers calling randomised sounds, until you call `stop()`. This will delete all the timers.
