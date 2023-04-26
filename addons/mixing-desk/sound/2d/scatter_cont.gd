@@ -4,9 +4,9 @@ var dlocs = []
 @export var scatter_range : float = 1.0
 
 func _ready():
+	super._ready()
 	for i in get_children():
 		dlocs.append(i.position)
-
 
 func _iplay(sound):
 	var snd = sound.duplicate()
