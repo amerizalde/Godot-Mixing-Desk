@@ -15,11 +15,11 @@ func _enter_tree():
 	add_custom_type("AutoLayerContainer", "Node", preload("music/containers/autolayer_cont.gd"), preload("music/icons/autolayer_cont_icon.png"))
 
 	#sound nodes - nonspatial
-	add_custom_type("MultiSoundContainer", "Node", preload("sound/nonspatial/multi_sound.gd"), preload("sound/snd_icon.png"))
-	add_custom_type("PolySoundContainer", "Node", preload("sound/nonspatial/polysound.gd"), preload("sound/snd_icon.png"))
-	add_custom_type("RanSoundContainer", "Node", preload("sound/nonspatial/ran_cont.gd"), preload("sound/snd_icon.png"))
-	add_custom_type("ScatterSoundContainer", "Node", preload("sound/nonspatial/scatter_cont.gd"), preload("sound/snd_icon.png"))
-	add_custom_type("ConcatSoundContainer", "Node", preload("sound/nonspatial/concat_cont.gd"), preload("sound/snd_icon.png"))
+	add_custom_type("MultiSoundContainer", "Node2D", preload("sound/nonspatial/multi_sound.gd"), preload("sound/snd_icon.png"))
+	add_custom_type("PolySoundContainer", "Node2D", preload("sound/nonspatial/polysound.gd"), preload("sound/snd_icon.png"))
+	add_custom_type("RanSoundContainer", "Node2D", preload("sound/nonspatial/ran_cont.gd"), preload("sound/snd_icon.png"))
+	add_custom_type("ScatterSoundContainer", "Node2D", preload("sound/nonspatial/scatter_cont.gd"), preload("sound/snd_icon.png"))
+	add_custom_type("ConcatSoundContainer", "Node2D", preload("sound/nonspatial/concat_cont.gd"), preload("sound/snd_icon.png"))
 
 	#sound nodes - 2d
 	add_custom_type("MultiSoundContainer2D", "Node2D", preload("sound/2d/multi_sound.gd"), preload("sound/snd_icon.png"))
@@ -29,11 +29,11 @@ func _enter_tree():
 	add_custom_type("ConcatSoundContainer2D", "Node2D", preload("sound/2d/concat_cont.gd"), preload("sound/snd_icon.png"))
 
 	#sound nodes - 3d
-	add_custom_type("MultiSoundContainer3D", "Spatial", preload("sound/3d/multi_sound.gd"), preload("sound/snd_icon.png"))
-	add_custom_type("PolySoundContainer3D", "Spatial", preload("sound/3d/polysound.gd"), preload("sound/snd_icon.png"))
-	add_custom_type("RanSoundContainer3D", "Spatial", preload("sound/3d/ran_cont.gd"), preload("sound/snd_icon.png"))
-	add_custom_type("ScatterSoundContainer3D", "Spatial", preload("sound/3d/scatter_cont.gd"), preload("sound/snd_icon.png"))
-	add_custom_type("ConcatSoundContainer3D", "Spatial", preload("sound/3d/concat_cont.gd"), preload("sound/snd_icon.png"))
+	add_custom_type("MultiSoundContainer3D", "Node3D", preload("sound/3d/multi_sound.gd"), preload("sound/snd_icon.png"))
+	add_custom_type("PolySoundContainer3D", "Node3D", preload("sound/3d/polysound.gd"), preload("sound/snd_icon.png"))
+	add_custom_type("RanSoundContainer3D", "Node3D", preload("sound/3d/ran_cont.gd"), preload("sound/snd_icon.png"))
+	add_custom_type("ScatterSoundContainer3D", "Node3D", preload("sound/3d/scatter_cont.gd"), preload("sound/snd_icon.png"))
+	add_custom_type("ConcatSoundContainer3D", "Node3D", preload("sound/3d/concat_cont.gd"), preload("sound/snd_icon.png"))
 
 func _exit_tree():
 	#music nodes

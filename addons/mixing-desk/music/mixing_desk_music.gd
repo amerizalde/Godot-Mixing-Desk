@@ -56,7 +56,7 @@ func _ready():
 	var root = Node.new()
 	root.name = "root"
 	add_child(root)
-	shuff.connect("timeout", shuffle_songs)
+	shuff.timeout.connect(shuffle_songs)
 #	for song in songs:
 #		for i in song.get_children():
 #			if i.cont == "core":
@@ -139,6 +139,8 @@ func _iplay(track):
 
 #kills overlays when finished
 func _track_finished(trk):
+	playing = false
+	print("%s done." % trk.stream)
 	trk.queue_free()
 
 #fade out overlays
@@ -235,12 +237,12 @@ func _play_overlays(song):
 func _play_concat(concat):
 	var rantrk = _get_rantrk(concat)
 	rantrk.play()
-	rantrk.connect("finished", self, "concat_fin", [concat])
+	rantrk.connect.finished(_concat_fin.bind(concat))
 
 func _concat_fin(concat):
 	for i in concat.get_children():
-		if i.is_connected("finished", self, "concat_fin") :
-			i.disconnect("finished", self, "concat_fin")
+		if i.finished.is_connected(_concat_fin) :
+			i.finished.disconnect(_concat_fin)
 	_play_concat(concat)
 
 #mute all layers above specified layer, and fade in all below
