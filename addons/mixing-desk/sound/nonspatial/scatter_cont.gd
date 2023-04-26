@@ -53,7 +53,7 @@ func play():
 		timer.name = str('scat_timer_' + str(i))
 		timeroot.add_child(timer)
 		timer.start(randf_range(min_time,max_time))
-		timer.connect("timeout", _scatter_timeout(timer, min_time, max_time))
+		timer.timeout.connect(_scatter_timeout.bind(timer, min_time, max_time))
 	if randf_range(0,1) > 0.7:
 		_scatter()
 	if timeout != 0:
@@ -61,7 +61,7 @@ func play():
 		timeouttimer.wait_time= timeout
 		add_child(timeouttimer)
 		timeouttimer.start()
-		timeouttimer.connect("timeout", stop)
+		timeouttimer.timeout.connect(stop)
 
 func _scatter_timeout(timer, min_time, max_time):
 	_scatter()
