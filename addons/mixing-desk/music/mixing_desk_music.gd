@@ -1,4 +1,6 @@
+@icon("res://addons/Godot-Mixing-Desk/addons/mixing-desk/music/icons/mdm_icon.png")
 extends Node
+class_name MixingDeskMusic
 
 var tempo
 var bars
@@ -127,12 +129,12 @@ func start_alone(song, layer):
 #play in isolation
 func _iplay(track):
 	var trk = track.duplicate()
-	get_node("root").add_child(trk)
-	var twe = create_tween()
-	twe.name = "Tween"
-	trk.add_child(twe)
+	get_node(".").add_child(trk)
+#	var twe = create_tween()
+#	twe.name = "Tween"
+#	trk.add_child(twe)
+	trk.finished.connect(_track_finished.bind(trk))
 	trk.play()
-	trk.connect("finished", _track_finished(trk))
 	return trk
 
 #kills overlays when finished

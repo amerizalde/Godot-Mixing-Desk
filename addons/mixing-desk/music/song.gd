@@ -1,5 +1,7 @@
+@icon("res://addons/Godot-Mixing-Desk/addons/mixing-desk/music/icons/song_icon.png")
 extends Node
 class_name Song
+
 
 #internal vars
 
